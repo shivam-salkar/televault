@@ -9,5 +9,5 @@
     "skipLibCheck": true,
     "outDir": "./dist"
   },
-  "include": ["server.ts", "app.ts", "telegram/**/*.ts", "declarations.d.ts"]
+  "include": ["server.ts", "app.ts", "telegram/**/*.ts", "routes/**/*.ts", "declarations.d.ts"]
 }

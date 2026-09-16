@@ -1,8 +1,23 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
+export interface VaultCredentials {
+  apiId: number
+  apiHash: string
+  sessionString: string
+}
+
 // Custom APIs for renderer
-const api = {}
+const api = {
+  storage: {
+    saveCredentials: (credentials: VaultCredentials): Promise<boolean> =>
+      ipcRenderer.invoke('storage:save', credentials),
+    getCredentials: (): Promise<VaultCredentials | null> =>
+      ipcRenderer.invoke('storage:get'),
+    clearCredentials: (): Promise<boolean> =>
+      ipcRenderer.invoke('storage:clear')
+  }
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
